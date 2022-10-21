@@ -1,10 +1,13 @@
 import asyncio
 import websockets
 
+ClientList = set()
+
 async def call(websocket):
     pass
 
-async def accept(websocket, path): 
+async def accept(websocket, path):
+    ClientList.add(websocket)
     while True:
         data = await websocket.recv()
         print("receive : " + data)
