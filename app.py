@@ -12,7 +12,6 @@ async def User(websocket,data):
     Room[data['roomNumber']]['client'].append(websocket)
     print(Room)
     
-
 async def Main(websocket, path):
     data = await websocket.recv()
     data = literal_eval(data)
