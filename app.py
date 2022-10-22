@@ -1,18 +1,24 @@
 import asyncio
 import websockets
+from ast import literal_eval
 
-ClientList = set()
+Room = {}
 
-async def call(websocket):
+async def device(websocket,data):
+    Room[data['roomNumber']]
+
+async def User(websocket):
     pass
-
-async def accept(websocket, path):
+async def Main(websocket, path):
     ClientList.add(websocket)
-    while True:
-        data = await websocket.recv()
-        print("receive : " + data)
-        await websocket.send("echo : " + data)
+    data = await websocket.recv()
+    data = literal_eval(data)
+    if(data['tick'])
+    
+    
+    
+    
 
-start_server = websockets.serve(accept, "0.0.0.0", 5050)
+start_server = websockets.serve(Main, "0.0.0.0", 5050)
 asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()
