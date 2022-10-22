@@ -14,7 +14,6 @@ async def User(websocket,data):
     
 
 async def Main(websocket, path):
-    ClientList.add(websocket)
     data = await websocket.recv()
     data = literal_eval(data)
     if(data['kind'] == 0):
