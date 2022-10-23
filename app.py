@@ -8,12 +8,17 @@ Room = {}
 # kind가 0일때 실행되는 함수 -> 
 async def device(websocket,data):
     Room[data['roomNumber']]={'device':websocket,'client':[]}
+    TList =[]
     try:
         # send_Img를 스레드로 동작
         send_t = threading.Thread(target='send_Img', args=(websocket,data['roomNumber']))
         send_t.start()
+        TList.append(send_t)
     except:
         del Room[data['roomNumber']]
+        
+    for i in TList:
+        i.join()
 
 #device에서 전송되는 이미지를 받아서 접속한 Client에게 전송
 def send_Img(websocket,RoomNb):
