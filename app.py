@@ -51,7 +51,7 @@ def User_command(websocket, roomNumber):
         
 # Websocket Server로 들어오면 가장 먼저 실행되는 함수
 # 처음 받는 데이터는 json형태로 입력을 받는다.
-# 데이터 안에 있는 요소들은{ 'kind' : (<int> 0 or 1) , 'roomNumber' : (<str> 기기 일련번호 ) }
+# 데이터 안에 있는 요소들은{ 'kind' : ( <int> 0 or 1 ) , 'roomNumber' : ( <str> 기기 일련번호 ) }
 async def Main(websocket, path):
     data = await websocket.recv()
     data = literal_eval(data)
