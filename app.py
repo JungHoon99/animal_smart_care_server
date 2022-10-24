@@ -31,18 +31,18 @@ def send_Img(websocket,RoomNb):
             except:
                 Room[RoomNb]['client'].remove(i)
 
-
 # kind가 1일때 실행되는 함수 -> 안드로이드에서 접속시 실행
 async def User(websocket,data):
     if(data['roomNumber'] not in Room):
-        await websocket.send("Not Connet")
+        await websocket.send("Not Connet Room")
         return
     
     Room[data['roomNumber']]['client'].append(websocket)
-    
+
+
 # Websocket Server로 들어오면 가장 먼저 실행되는 함수
 # 처음 받는 데이터는 json형태로 입력을 받는다.
-# 데이터 안에 있는 요소들은{ 'kind' : (<int> 0 or 1) , 'roomNumber' : (<str> 기기 일련번호 ) , '' : '' }
+# 데이터 안에 있는 요소들은{ 'kind' : (<int> 0 or 1) , 'roomNumber' : (<str> 기기 일련번호 ) }
 async def Main(websocket, path):
     data = await websocket.recv()
     data = literal_eval(data)
