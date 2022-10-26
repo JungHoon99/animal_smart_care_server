@@ -34,15 +34,22 @@ def send_Img(websocket,RoomNb):
                 
 # kind가 1일때 실행되는 함수 -> 안드로이드에서 접속시 실행
 async def User(websocket,data):
+    TList =[]
     if(data['roomNumber'] not in Room):
         await websocket.send("Not Connet Room")
         return 'Falsse'
     else:
         await websocket.send("Connect Room")
-        
-        Room[data['roomNumber']]['client'].append(websocket)
+    
+    Room[data['roomNumber']]['client'].append(websocket)
+    send_t = threading.Thread(target='send_Img', args=(websocket,data['roomNumber']))
+    send_t.start()
+    TList.append(send_t)
+    
+    for i in TList:
+        i.join()
 
-#recv command to user send 
+#recv command to user send
 def User_command(websocket, roomNumber):
     while(1):
         data = await websocket.recv()
