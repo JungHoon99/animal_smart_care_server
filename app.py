@@ -29,6 +29,7 @@ def send_Img(websocket,RoomNb):
             try:
                 i.send()
             except:
+                print("Client Error")
                 Room[RoomNb]['client'].remove(i)
 
                 
@@ -53,7 +54,10 @@ async def User(websocket,data):
 def User_command(websocket, roomNumber):
     while(1):
         data = await websocket.recv()
-        await Room[roomNumber]['device'].send(data)
+        try:
+        	await Room[roomNumber]['device'].send(data)
+        except:
+            print("Device Error")
         
         
 # Websocket Server로 들어오면 가장 먼저 실행되는 함수
