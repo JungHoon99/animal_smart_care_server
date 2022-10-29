@@ -25,6 +25,7 @@ def send_Img(websocket,RoomNb):
     while(1):
         data = websocket.recv()
         tmp = Room[RoomNb]['client'].copy()
+        print('send')
         for i in tmp:
             try:
                 i.send()
@@ -43,7 +44,7 @@ async def User(websocket,data):
         await websocket.send("Connect Room")
     
     Room[data['roomNumber']]['client'].append(websocket)
-    send_t = threading.Thread(target='send_Img', args=(websocket,data['roomNumber']))
+    send_t = threading.Thread(target='User_command', args=(websocket,data['roomNumber']))
     send_t.start()
     TList.append(send_t)
     
@@ -53,9 +54,9 @@ async def User(websocket,data):
 #recv command to user send
 def User_command(websocket, roomNumber):
     while(1):
-        data = await websocket.recv()
+        data = websocket.recv()
         try:
-        	await Room[roomNumber]['device'].send(data)
+        	Room[roomNumber]['device'].send(data)
         except:
             print("Device Error")
         
@@ -65,6 +66,7 @@ def User_command(websocket, roomNumber):
 # 데이터 안에 있는 요소들은{ 'kind' : ( <int> 0 or 1 ) , 'roomNumber' : ( <str> 기기 일련번호 ) }
 async def Main(websocket, path):
     data = await websocket.recv()
+    print("Connect")
     data = literal_eval(data)
     if(data['kind'] == 0):
         await device(websocket,data)
