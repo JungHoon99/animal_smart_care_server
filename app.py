@@ -39,15 +39,12 @@ async def User(websocket,data):
         await websocket.send("Connect Room")
     
     Room[data['roomNumber']]['client'].append(websocket)
-    send_t = threading.Thread(target=User_command, args=(websocket,data['roomNumber']))
-    send_t.start()
-    TList.append(send_t)
+    send_t = asyncio.create_task(User_command(websocket,data['roomNumber']))
     
-    for i in TList:
-        i.join()
+    await send_t
 
 #recv command to user send
-def User_command(websocket, roomNumber):
+async def User_command(websocket, roomNumber):
     while(1):
         data = websocket.recv()
         try:
