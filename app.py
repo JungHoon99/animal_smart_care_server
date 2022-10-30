@@ -11,7 +11,7 @@ async def device(websocket,data):
     TList =[]
     try:
         # send_Img를 스레드로 동작
-        send_t = threading.Thread(target='send_Img', args=(websocket,data['roomNumber']))
+        send_t = threading.Thread(target='send_Img', args=(websocket,data['roomNumber'],))
         send_t.start()
         TList.append(send_t)
     except:
@@ -33,7 +33,7 @@ def send_Img(websocket,RoomNb):
                 print("Client Error")
                 Room[RoomNb]['client'].remove(i)
 
-                
+
 # kind가 1일때 실행되는 함수 -> 안드로이드에서 접속시 실행
 async def User(websocket,data):
     TList =[]
@@ -44,7 +44,7 @@ async def User(websocket,data):
         await websocket.send("Connect Room")
     
     Room[data['roomNumber']]['client'].append(websocket)
-    send_t = threading.Thread(target='User_command', args=(websocket,data['roomNumber']))
+    send_t = threading.Thread(target='User_command', args=(websocket,data['roomNumber'],))
     send_t.start()
     TList.append(send_t)
     
