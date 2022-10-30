@@ -8,27 +8,22 @@ Room = {}
 # kind가 0일때 실행되는 함수 -> 
 async def device(websocket,data):
     Room[data['roomNumber']]={'device':websocket,'client':[]}
-    TList =[]
     try:
-        # send_Img를 스레드로 동작
-        send_t = threading.Thread(target='send_Img', args=(websocket,data['roomNumber'],))
-        send_t.start()
-        TList.append(send_t)
+        send_t = asyncio.create_task(send_Img(websocket,data['roomNumber']))
     except:
         del Room[data['roomNumber']]
         
-    for i in TList:
-        i.join()
+    await send_t
 
 #device에서 전송되는 이미지를 받아서 접속한 Client에게 전송
-def send_Img(websocket,RoomNb):
+async def send_Img(websocket,RoomNb):
     while(1):
-        data = websocket.recv()
+        data = await websocket.recv()
         tmp = Room[RoomNb]['client'].copy()
         print('send')
         for i in tmp:
             try:
-                i.send()
+                await i.send()
             except:
                 print("Client Error")
                 Room[RoomNb]['client'].remove(i)
@@ -44,7 +39,7 @@ async def User(websocket,data):
         await websocket.send("Connect Room")
     
     Room[data['roomNumber']]['client'].append(websocket)
-    send_t = threading.Thread(target='User_command', args=(websocket,data['roomNumber'],))
+    send_t = threading.Thread(target=User_command, args=(websocket,data['roomNumber']))
     send_t.start()
     TList.append(send_t)
     
