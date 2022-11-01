@@ -8,6 +8,7 @@ Room = {}
 # kind가 0일때 실행되는 함수 -> 
 async def device(websocket,data):
     Room[data['roomNumber']]={'device':websocket,'client':[]}
+    print(Room)
     try:
         send_t = asyncio.create_task(send_Img(websocket,data['roomNumber']))
     except:
@@ -19,14 +20,9 @@ async def device(websocket,data):
 async def send_Img(websocket,RoomNb):
     while(1):
         data = await websocket.recv()
-        tmp = Room[RoomNb]['client'].copy()
-        print('send')
-        for i in tmp:
-            try:
-                await i.send()
-            except:
-                print("Client Error")
-                Room[RoomNb]['client'].remove(i)
+        for i in Room[RoomNb]['client']:
+            await i.send(data)
+
 
 
 # kind가 1일때 실행되는 함수 -> 안드로이드에서 접속시 실행
@@ -39,6 +35,7 @@ async def User(websocket,data):
         await websocket.send("Connect Room")
     
     Room[data['roomNumber']]['client'].append(websocket)
+    print(Room)
     send_t = asyncio.create_task(User_command(websocket,data['roomNumber']))
     
     await send_t
@@ -46,9 +43,9 @@ async def User(websocket,data):
 #recv command to user send
 async def User_command(websocket, roomNumber):
     while(1):
-        data = websocket.recv()
+        data = await websocket.recv()
         try:
-        	Room[roomNumber]['device'].send(data)
+        	await Room[roomNumber]['device'].send(data)
         except:
             print("Device Error")
         
