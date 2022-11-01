@@ -25,8 +25,8 @@ async def send_Img(websocket,RoomNb):
             try:
             	await i.send(data)
             except:
-                del Room[RoomNb]['client'][i]
-                print('error')
+                Room[RoomNb]['client'].remove(i)
+                print('LOST Client')
 
 
 
