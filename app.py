@@ -5,7 +5,7 @@ import threading
 
 Room = {}
 
-# kind가 0일때 실행되는 함수 -> 
+# kind가 0일때 실행되는 함수 -> 라즈베리파이 접속시 실행
 async def device(websocket,data):
     Room[data['roomNumber']]={'device':websocket,'client':[]}
     print(Room)
@@ -16,7 +16,7 @@ async def device(websocket,data):
         
     await send_t
 
-#device에서 전송되는 이미지를 받아서 접속한 Client에게 전송
+# device에서 전송되는 이미지를 받아서 접속한 Client에게 전송
 async def send_Img(websocket,RoomNb):
     while(1):
         data = await websocket.recv()
@@ -43,7 +43,7 @@ async def User(websocket,data):
     Room[data['roomNumber']]['client'].append(websocket)
     await send_t
     
-#recv command to user send
+# recv command to user send
 async def User_command(websocket, roomNumber):
     while(1):
         data = await websocket.recv()
