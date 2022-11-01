@@ -41,7 +41,9 @@ async def User(websocket,data):
     send_t = asyncio.create_task(User_command(websocket,data['roomNumber']))
     
     Room[data['roomNumber']]['client'].append(websocket)
+    print(Room)
     await send_t
+    Room[data['roomNumber']]['client'].remove(websocket)
     
 # recv command to user send
 async def User_command(websocket, roomNumber):
@@ -51,6 +53,7 @@ async def User_command(websocket, roomNumber):
         	await Room[roomNumber]['device'].send(data)
         except:
             print("Device Error")
+            break
         
         
 # Websocket Server로 들어오면 가장 먼저 실행되는 함수
