@@ -20,8 +20,13 @@ async def device(websocket,data):
 async def send_Img(websocket,RoomNb):
     while(1):
         data = await websocket.recv()
-        for i in Room[RoomNb]['client']:
-            await i.send(data)
+        tmp = Room[RoomNb]['client'].copy()
+        for i in tmp:
+            try:
+            	await i.send(data)
+            except:
+                del Room[RoomNb]['client'][i]
+                print('error')
 
 
 
@@ -33,13 +38,11 @@ async def User(websocket,data):
         return 'Falsse'
     else:
         await websocket.send("Connect Room")
-    
-    Room[data['roomNumber']]['client'].append(websocket)
-    print(Room)
     send_t = asyncio.create_task(User_command(websocket,data['roomNumber']))
     
+    Room[data['roomNumber']]['client'].append(websocket)
     await send_t
-
+    
 #recv command to user send
 async def User_command(websocket, roomNumber):
     while(1):
