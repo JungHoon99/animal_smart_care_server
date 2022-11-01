@@ -13,8 +13,10 @@ async def device(websocket,data):
         send_t = asyncio.create_task(send_Img(websocket,data['roomNumber']))
     except:
         del Room[data['roomNumber']]
+        return
         
     await send_t
+    del Room[data['roomNumber']]
 
 # device에서 전송되는 이미지를 받아서 접속한 Client에게 전송
 async def send_Img(websocket,RoomNb):
@@ -27,8 +29,6 @@ async def send_Img(websocket,RoomNb):
             except:
                 Room[RoomNb]['client'].remove(i)
                 print('LOST Client')
-
-
 
 # kind가 1일때 실행되는 함수 -> 안드로이드에서 접속시 실행
 async def User(websocket,data):
