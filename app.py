@@ -68,6 +68,6 @@ async def Main(websocket, path):
     else:
         await User(websocket,data)
 
-start_server = websockets.serve(Main, "0.0.0.0", 5050)
+start_server = websockets.serve(Main, "0.0.0.0", 5050, ping_interval=None)
 asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()
