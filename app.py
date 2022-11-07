@@ -68,10 +68,17 @@ async def Main(websocket, path):
         await device(websocket,data)
     else:
         await User(websocket,data)
+        
+async def SmartPhone(websocket, path):
+    data = await websocket.recv()
+    print("Connect")
+    data = literal_eval(data)
 
 db = MySqlConnect.MufiData()
 
 
 start_server = websockets.serve(Main, "0.0.0.0", 5050, ping_interval=None)
+start_smartPhone_server = websockets.serve(Main, "0.0.0.0", 5051, ping_interval=None)
 asyncio.get_event_loop().run_until_complete(start_server)
+asyncio.get_event_loop().run_until_complete(start_smartPhone_server)
 asyncio.get_event_loop().run_forever()
