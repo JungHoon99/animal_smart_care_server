@@ -2,6 +2,7 @@ import asyncio
 import websockets
 from ast import literal_eval
 import threading
+import MySqlConnect
 
 Room = {}
 
@@ -67,6 +68,9 @@ async def Main(websocket, path):
         await device(websocket,data)
     else:
         await User(websocket,data)
+
+db = MySqlConnect.MufiData()
+
 
 start_server = websockets.serve(Main, "0.0.0.0", 5050, ping_interval=None)
 asyncio.get_event_loop().run_until_complete(start_server)
