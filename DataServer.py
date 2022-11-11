@@ -5,11 +5,12 @@ import MySqlConnect
 
 async def dataServer(websocket, path):
     data = await websocket.recv()
-    print(data)
-    await websocket.send("Hello Dark!")
-    data = await websocket.recv()
-    print(data)
-    await websocket.send("Hello Dark!websocket")
-    data = await websocket.recv()
-    print(data)
-    await websocket.send("Hello Darkss!")
+    literal_eval(data)
+    if(data['code'] == 'device'):
+        your_Code = {"Connect": "Success"}
+        await websocket.send("device")
+        
+    elif(data['code'] == 'Phone'):
+        your_Code = {"Connect": "Success"}
+        await websocket.send("phone")
+        
