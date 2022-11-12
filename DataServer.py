@@ -8,6 +8,7 @@ from Devices import DeviceDataServer
 async def dataServer(websocket, path):
     data = await websocket.recv()
     literal_eval(data)
+    
     if(data['code'] == 'device'):
         your_Code = {"Connect": "Success"}
         await websocket.send("device")
