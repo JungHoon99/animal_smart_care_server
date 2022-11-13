@@ -3,7 +3,7 @@ import websockets
 from ast import literal_eval
 import MySqlConnect
 from Phone import PhoneDataServer
-from Devices import DeviceDataServer
+from device import DeviceDataServer
 
 async def dataServer(websocket, path):
     data = await websocket.recv()
