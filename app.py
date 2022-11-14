@@ -70,7 +70,7 @@ async def Main(websocket, path):
 
 
 start_server = websockets.serve(Main, "0.0.0.0", 5050, ping_interval=None)
-start_data_server = websockets.serve(DataServer.dataServer, "0.0.0.0", 5051)
+start_data_server = websockets.serve(DataServer.dataServer, "0.0.0.0", 5051, ping_interval=None)
 asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_until_complete(start_data_server)
 asyncio.get_event_loop().run_forever()

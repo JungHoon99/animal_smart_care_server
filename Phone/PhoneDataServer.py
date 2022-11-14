@@ -1,11 +1,12 @@
-import MySqlConnect
+from MySqlConnect import MufiData
 import asyncio
 import websockets
+from ast import literal_eval
 
 async def Main(websocket,path):
-    data = websocket.recv()
-    literal_eval(data)
-    md  = MySqlConnect()
+    data = await websocket.recv()
+    data = literal_eval(data)
+    md  = MufiData()
     sendMessage = {"Title":"","message":""}
     if(data["kind"]=="select"):
         data = md.selectdb(data["message"])
