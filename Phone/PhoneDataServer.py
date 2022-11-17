@@ -9,7 +9,7 @@ async def Main(websocket,path):
     data = literal_eval(data)
     md  = MufiData()
     sendMessage = {"Title":"","message":""}
-    
+    print(data)
     if(data["kind"]=="select"):
         data = md.selectdb(data["message"])
         sendMessage["Title"] = "Select success"
