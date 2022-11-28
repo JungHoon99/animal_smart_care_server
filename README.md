@@ -14,3 +14,8 @@
 - https://scribblinganything.tistory.com/493
 - https://uiandwe.tistory.com/1039
 - https://stackoverflow.com/questions/16214190/how-to-convert-base64-string-to-image
+
+---
+### 개선해야할 사상
+- hls 서버 -> https://medium.com/@bmabir17/http-live-streaming-hls-server-with-python-part-i-8ccfeb429de7
+- 유튜브나 트위치등이 어떻게 live strteaming을 하는가 -> https://www.youtube.com/watch?v=wWx6aZeDR38 
