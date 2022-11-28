@@ -19,3 +19,4 @@
 ### 개선해야할 사상
 - hls 서버 -> https://medium.com/@bmabir17/http-live-streaming-hls-server-with-python-part-i-8ccfeb429de7
 - 유튜브나 트위치등이 어떻게 live strteaming을 하는가 -> https://www.youtube.com/watch?v=wWx6aZeDR38 
+https://popawaw.tistory.com/209
